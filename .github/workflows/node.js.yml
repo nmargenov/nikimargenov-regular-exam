@@ -23,3 +23,24 @@ jobs:
       run: npm run test:unit
     - name: Display my github username
       run: echo "nikimargenov"
+
+  run-ui-tests:
+    needs: build_test
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout the repository
+      uses: actions/checkout@v3
+    - name: Use Node.js 20.x
+      uses: actions/setup-node@v3
+      with:
+        node-version: 20.x
+        cache: 'npm'
+    - name: Install NPM dependencies
+      run: npm install
+    - name: Install Playwright Browsers
+      run: npx playwright install
+    - name: Start the application
+      run: npm run start &
+    - name: Start the UI Tests
+      run: npm run test:ui
+    
