@@ -43,4 +43,14 @@ jobs:
       run: npm run start &
     - name: Start the UI Tests
       run: npm run test:ui
-    
+
+  deploy-production:
+    needs: run-ui-tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to production
+        uses: JorgeLNJunior/render-deploy@v1.4.4
+        with:
+          service_id: ${{ secrets.MY_RENDER_SERVICE_ID }}
+          api_key: ${{ secrets.MY_RENDER_API_KEY }}
+          wait_deploy: true
